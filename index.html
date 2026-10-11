@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'unsafe-inline'; base-uri 'self'; frame-ancestors 'none';">
+  <title>Souza & Carvalho | Tabacaria e Eletrônicos Atacado</title>
+  <!-- ===== Favicon (ícone da aba do navegador) =====
+       EDITÁVEL: hoje usa a logo. Se preferir a patinha azul — bem mais
+       legível em tamanho pequeno — comente as 3 linhas abaixo e
+       descomente as 2 do bloco seguinte. -->
+  <link rel="icon" href="images/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  <!--
+  <link rel="icon" type="image/svg+xml" href="images/favicon-pata.svg">
+  <link rel="icon" href="images/favicon-pata.ico" sizes="any">
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+
+<style>
+.catalog-summary{font-size:13px;color:#666;margin:0 0 14px;min-height:20px}
+.catalog-pagination{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:8px;margin:28px 0 8px}
+.catalog-pagination button{min-width:42px;padding:10px 13px;border:1px solid #e3e3e3;border-radius:10px;background:#fff;color:#333;font:600 13px Inter,sans-serif;cursor:pointer;transition:.18s}
+.catalog-pagination button:hover:not(:disabled),.catalog-pagination button.active{background:#f36f21;border-color:#f36f21;color:#fff}
+.catalog-pagination button:disabled{opacity:.4;cursor:not-allowed}
+#produtos{scroll-margin-top:90px}
+@media(max-width:520px){.catalog-pagination{gap:5px}.catalog-pagination button{min-width:36px;padding:9px 10px;font-size:12px}.catalog-tools{gap:9px!important}.catalog-tools input,.catalog-tools select{min-width:100%!important;width:100%}}
+</style>
+
+
+<style id="sc-black-green-theme">
+:root{--bg:#050706;--bg-alt:#0b100d;--bg-card:#101712;--line:#26372b;--blue:#20c45a;--blue-bright:#63e68b;--blue-dim:#123820;--blue-glow:rgba(32,196,90,.38);--text:#f3f7f4;--text-muted:#a0afa5}
+body{background:#050706;color:#f3f7f4}
+.site-header,.site-footer{background:#080d09!important;border-color:#26372b!important}
+.product-card,.catalog-tools,.account-modal,.history-modal,.cart-panel,.sc-detail-modal{background:#101712!important;color:#f3f7f4!important;border-color:#26372b!important}
+.product-desc,.stock-note,.account-intro,.account-security-note{color:#a0afa5!important}
+.product-price,.product-price.is-promo,.product-weight,.section-kicker,.catalog-result-count{color:#63e68b!important}
+.product-weight,.product-badge,.category-chip.active{background:#123820!important;color:#63e68b!important;border-color:#20c45a!important}
+button,.btn,.add-to-cart-btn,.checkout-btn{accent-color:#20c45a}
+.add-to-cart-btn,.checkout-btn,.btn-primary,.history-button{background:#20c45a!important;color:#061009!important;border-color:#20c45a!important}
+.catalog-pagination button:hover:not(:disabled),.catalog-pagination button.active{background:#20c45a!important;border-color:#20c45a!important;color:#061009!important}
+.catalog-pagination button,.catalog-tools input,.catalog-tools select,.account-modal input,.qty-stepper{background:#0b100d!important;color:#f3f7f4!important;border-color:#314638!important}
+.account-modal .account-tabs button.active{background:#123820!important;border-color:#20c45a!important;color:#63e68b!important}
+.account-modal #accountMessage{color:#63e68b!important}
+.product-image{background:#0b100d!important}
+.product-image img{mix-blend-mode:normal!important}
+footer a:hover,.main-nav a:hover{color:#63e68b!important}
+</style>
+</head>
+<body>
+
+  <!-- ===== Cabeçalho ===== -->
+  <header class="site-header">
+    <div class="wrap">
+      <a href="#" class="brand">
+        <img src="images/logo.jpg" alt="Souza & Carvalho Tabacaria e Eletrônicos">
+        <!-- EDITÁVEL: nome da marca -->
+        Souza & Carvalho
+      </a>
+
+      <nav class="main-nav">
+        <a href="#categorias">Categorias</a>
+        <a href="#produtos">Produtos</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#contato">Contato</a>
+      </nav>
+
+      <button class="history-button" id="historyToggle" type="button">Meus pedidos</button>
+      <button class="history-button" id="accountToggle" type="button">Entrar / cadastrar</button>
+      <button class="cart-button" id="cartToggle" aria-label="Abrir carrinho">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.5 3h2l2.6 12.4a2 2 0 0 0 2 1.6h8.4a2 2 0 0 0 2-1.6L21 8H6"></path></svg>
+        <span class="cart-badge" id="cartBadge" hidden>0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <div class="hero-eyebrow">ATACADO • TABACARIA E ACESSÓRIOS</div>
+        <!-- EDITÁVEL: título e texto principal -->
+        <h1>Tudo para sua revenda <em>em um só lugar.</em></h1>
+        <p>Catálogo de tabacaria e head shop com preços de atacado para lojistas. Consulte disponibilidade e condições para revenda.</p>
+        <div style="display:flex; gap:14px; flex-wrap:wrap;">
+          <a href="#produtos" class="btn btn-primary">Ver produtos</a>
+          <a href="https://wa.me/5571991155187?text=Ol%C3%A1%2C%20quero%20consultar%20os%20pre%C3%A7os%20de%20atacado%20da%20Souza%20%26%20Carvalho" class="btn btn-ghost">Falar com a gente</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src="images/logo-souza-carvalho.jpg" alt="Souza & Carvalho Tabacaria e Eletrônicos">
+      </div>
+    </div>
+  </section>
+
+  <section class="wholesale-benefits" aria-label="Vantagens da loja para revendedores">
+    <div class="wrap wholesale-benefits-grid">
+      <article class="wholesale-benefit"><span class="benefit-icon" aria-hidden="true">▦</span><div><h3>Catálogo organizado</h3><p>Explore categorias e encontre os produtos para sua revenda.</p></div></article>
+      <article class="wholesale-benefit"><span class="benefit-icon" aria-hidden="true">％</span><div><h3>Condições por volume</h3><p>Confira os preços por quantidade quando estiverem disponíveis.</p></div></article>
+      <article class="wholesale-benefit"><span class="benefit-icon" aria-hidden="true">✓</span><div><h3>Pedido sob controle</h3><p>Monte seu carrinho e revise os itens antes de finalizar.</p></div></article>
+      <article class="wholesale-benefit"><span class="benefit-icon" aria-hidden="true">↻</span><div><h3>Compre novamente</h3><p>Acesse “Meus pedidos” para consultar seu histórico.</p></div></article>
+    </div>
+  </section>
+
+  <section class="section category-section" id="categorias"><div class="wrap"><div class="section-head"><div><h2>Explore por categoria</h2><p>Encontre rapidamente o que sua loja precisa.</p></div></div><div id="categoryChips" class="category-chips"></div></div></section>
+
+  <!-- ===== Produtos ===== -->
+  <section class="section" id="produtos">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Catálogo de atacado</h2>
+          <p>Pesquise, filtre por categoria e monte seu pedido de atacado com praticidade.</p>
+        </div>
+      </div>
+
+      <div class="trust-strip"><div><strong>Catálogo de atacado</strong><span>Consulte condições para revenda</span></div><div><strong>Pedido organizado</strong><span>Monte a lista antes de enviar</span></div><div><strong>Atendimento direto</strong><span>Confirme estoque e entrega</span></div></div>
+      <div class="catalog-tools" style="display:flex;gap:12px;flex-wrap:wrap;margin:22px 0">
+        <input id="catalogSearch" type="search" placeholder="Buscar produto pelo nome..." aria-label="Buscar produto" style="flex:1;min-width:220px;padding:13px 15px;border:1px solid #414141;border-radius:10px;background:#171717;color:#fff">
+        <select id="catalogCategory" aria-label="Filtrar categoria" style="min-width:210px;padding:13px 15px;border:1px solid #414141;border-radius:10px;background:#171717;color:#fff">
+          <option value="">Todas as categorias</option>
+        </select>
+        <select id="catalogSort" aria-label="Ordenar produtos" style="min-width:200px;padding:13px 15px;border:1px solid #414141;border-radius:10px;background:#fff;color:#242424">
+          <option value="relevance">Ordenação padrão</option><option value="name-asc">Nome: A–Z</option><option value="price-asc">Menor preço</option><option value="price-desc">Maior preço</option><option value="stock">Maior estoque informado</option>
+        </select>
+        <select id="catalogAvailability" aria-label="Disponibilidade"><option value="">Qualquer disponibilidade</option><option value="stock">Com estoque informado</option><option value="quote">Consultar disponibilidade</option></select>
+        <input id="catalogMinPrice" type="number" min="0" step="0.01" placeholder="Preço mínimo R$" aria-label="Preço mínimo">
+        <input id="catalogMaxPrice" type="number" min="0" step="0.01" placeholder="Preço máximo R$" aria-label="Preço máximo">
+      </div>
+      <div id="catalogSummary" class="catalog-summary" aria-live="polite"></div>
+      <div id="catalogResultCount" class="catalog-result-count" aria-live="polite"></div>
+      <div class="product-grid" id="productGrid">
+        <!-- Preenchido via JavaScript a partir de js/store.js -->
+      </div>
+      <nav id="catalogPagination" class="catalog-pagination" aria-label="Páginas do catálogo"></nav>
+    </div>
+  </section>
+
+  <!-- ===== Sobre ===== -->
+  <section class="section section-alt" id="sobre">
+    <div class="wrap" style="max-width: 760px;">
+      <h2 style="font-family: var(--font-display); font-size: 28px; margin-bottom: 16px;">Sobre a Souza & Carvalho</h2>
+      <!-- EDITÁVEL: texto sobre a loja -->
+      <p style="color: var(--text-muted); font-size: 15.5px; line-height: 1.7;">
+        A Souza & Carvalho reúne produtos de tabacaria, head shop e eletrônicos para lojistas e revendedores. Nosso catálogo facilita a consulta de itens e preços de atacado. Fale com nossa equipe para confirmar disponibilidade, quantidades e condições comerciais.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== Rodapé / Contato ===== -->
+  <footer class="site-footer" id="contato">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="brand">
+            <img src="images/logo.jpg" alt="Souza & Carvalho Tabacaria e Eletrônicos">
+            Souza & Carvalho
+          </a>
+          <!-- EDITÁVEL: frase curta da marca -->
+          <p>Tabacaria e eletrônicos • catálogo para lojistas e revendedores.</p>
+          <p class="footer-note">Preços, estoque e condições comerciais podem ser confirmados com a equipe.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Loja</h4>
+          <a href="#produtos">Produtos</a>
+          <a href="#sobre">Sobre</a>
+          <a href="admin.html">Área do administrador</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Fale com a gente</h4>
+          <!-- EDITÁVEL: troque pelo número e usuário reais -->
+          <a href="https://wa.me/5571991155187?text=Ol%C3%A1%2C%20preciso%20de%20suporte%20da%20Souza%20%26%20Carvalho" target="_blank" rel="noopener">WhatsApp para suporte: (71) 9 9115-5187</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span id="anoAtual">2026</span> Souza & Carvalho Tabacaria e Eletrônicos LTDA. Todos os direitos reservados.</span>
+        <a href="admin.html">Painel do administrador</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== Carrinho (painel lateral) ===== -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <aside class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+      <h2>Seu carrinho</h2>
+      <button class="cart-close" id="cartClose" aria-label="Fechar carrinho">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <div class="cart-items" id="cartItems">
+      <!-- Preenchido via JavaScript -->
+    </div>
+
+    <div class="cart-footer">
+      <div class="checkout-customer"><h3>Dados para o pedido</h3><label for="customerName">Nome / loja</label><input id="customerName" autocomplete="organization" placeholder="Nome da loja ou responsável"><label for="customerCity">Cidade e estado</label><input id="customerCity" autocomplete="address-level2" placeholder="Ex.: Fortaleza - CE"><label for="customerPayment">Preferência de pagamento</label><select id="customerPayment"><option value="A combinar">A combinar</option><option>PIX</option><option>Cartão</option><option>Transferência</option></select></div>
+      <div class="cart-total-row">
+        <span>Total</span>
+        <span id="cartTotal">R$ 0,00</span>
+      </div>
+      <button class="checkout-btn" id="checkoutBtn" aria-label="Pagar com Mercado Pago">
+        <svg class="payment-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"></rect><path d="M3 9h18M7 14h4M16 14h1"></path><path d="m15.5 2.5 2 2-2 2"></path></svg>
+        Pagar
+      </button>
+      <!-- EDITÁVEL: troque o número de WhatsApp no script no fim da página -->
+      <p class="cart-note">Pagamento seguro pelo Mercado Pago. PIX e cartões disponíveis conforme a configuração da conta. Frete e disponibilidade podem precisar de confirmação.</p>
+    </div>
+  </aside>
+
+  <div class="account-overlay" id="accountOverlay" hidden></div>
+  <section class="account-modal" id="accountModal" role="dialog" aria-modal="true" aria-labelledby="accountTitle" hidden>
+    <button type="button" id="accountClose" class="account-close" aria-label="Fechar">×</button>
+    <span class="eyebrow">ÁREA DO CLIENTE</span>
+    <h2 id="accountTitle">Entre ou crie sua conta</h2>
+    <p class="account-intro">Para finalizar uma compra, entre com seu e-mail e senha ou faça seu cadastro gratuito.</p>
+    <div class="account-tabs"><button type="button" class="active" id="loginTab">Entrar</button><button type="button" id="registerTab">Criar cadastro</button></div>
+    <form id="accountForm">
+      <label for="accountName" id="accountNameLabel" hidden>Nome completo / loja</label><input id="accountName" name="name" autocomplete="name" placeholder="Nome completo ou loja" hidden>
+      <label for="accountEmail">E-mail</label><input id="accountEmail" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="voce@exemplo.com">
+      <label for="accountPassword">Senha</label><input id="accountPassword" name="password" type="password" autocomplete="current-password" required minlength="8" placeholder="Mínimo de 8 caracteres">
+      <p id="accountMessage" role="status" aria-live="polite"></p>
+      <button class="checkout-btn" id="accountSubmit" type="submit">Entrar</button>
+    </form>
+    <div id="accountSignedIn" hidden><p id="accountWelcome"></p>
+      <form id="profileForm" class="customer-profile-form">
+        <h3>Meu perfil e entrega</h3>
+        <label for="profileName">Nome completo / responsável</label><input id="profileName" required maxlength="120" autocomplete="name">
+        <label for="profilePhone">Telefone / WhatsApp</label><input id="profilePhone" required maxlength="25" autocomplete="tel" placeholder="(85) 99999-9999">
+        <label for="profileCpf">CPF ou CNPJ (opcional)</label><input id="profileCpf" maxlength="24" autocomplete="off">
+        <label for="profileCep">CEP</label><input id="profileCep" maxlength="9" autocomplete="postal-code" placeholder="00000-000">
+        <label for="profileAddress">Rua e número</label><input id="profileAddress" required maxlength="180" autocomplete="street-address">
+        <label for="profileComplement">Complemento / bairro</label><input id="profileComplement" maxlength="120">
+        <div class="profile-two"><div><label for="profileCity">Cidade</label><input id="profileCity" required maxlength="100" autocomplete="address-level2"></div><div><label for="profileState">UF</label><input id="profileState" required maxlength="2" autocomplete="address-level1"></div></div>
+        <p id="profileMessage" role="status" aria-live="polite"></p><button class="checkout-btn" type="submit">Salvar meus dados</button>
+      </form>
+      <button type="button" id="accountLogout" class="btn btn-ghost">Sair da conta</button></div>
+    <p class="account-security-note">Seus dados de perfil são salvos na conta quando o site está hospedado com o servidor Node.js.</p>
+  </section>
+
+  <div class="history-overlay" id="historyOverlay" hidden></div>
+  <section class="history-modal" id="historyModal" role="dialog" aria-modal="true" aria-labelledby="historyTitle" hidden>
+    <div class="history-head"><div><span class="eyebrow">ÁREA DO CLIENTE</span><h2 id="historyTitle">Meus pedidos</h2></div><button id="historyClose" class="history-close" aria-label="Fechar">×</button></div>
+    <p class="history-disclaimer">Os pedidos online são consultados no servidor e mostram o status de pagamento e entrega. Pedidos antigos salvos apenas neste navegador podem continuar aparecendo localmente.</p>
+    <div id="historyList"></div>
+    <button class="btn btn-ghost" id="historyClear" type="button">Limpar histórico deste navegador</button>
+  </section>
+
+  <script src="js/produtos.js"></script>
+  <script src="js/store.js"></script>
+  <script>
+    (function () {
+      document.getElementById('anoAtual').textContent = new Date().getFullYear();
+
+      // EDITÁVEL: número de WhatsApp da loja (só números, com DDI+DDD)
+      const WHATSAPP_NUMBER = '5571991155187';
+
+      const grid = document.getElementById('productGrid');
+      const cartItemsEl = document.getElementById('cartItems');
+      const cartTotalEl = document.getElementById('cartTotal');
+      const cartBadge = document.getElementById('cartBadge');
+
+      const qtyState = {}; // quantidade selecionada em cada card, antes de adicionar
+      const PAGE_SIZE = 15;
+      let currentPage = 1;
+      window.SC_CATALOG_STATE = { get page(){return currentPage;}, set page(v){currentPage=v;}, pageSize: PAGE_SIZE };
+      function getUnitPrice(item, quantity) {
+        const tiers = (item.precosVolume || []).filter(t => Number(t.quantidade) <= quantity && Number(t.preco) > 0).sort((a,b) => Number(b.quantidade)-Number(a.quantidade));
+        return tiers.length ? Number(tiers[0].preco) : Number(item.preco || 0);
+      }
+
+      function renderProducts() {
+        const produtos = getAllProducts();
+        grid.innerHTML = '';
+        produtos.forEach((produto) => {
+          if (!(produto.id in qtyState)) qtyState[produto.id] = 1;
+
+          const temDesconto = produto.precoAntigo && produto.precoAntigo > produto.preco;
+          const descontoPct = temDesconto
+            ? Math.round((1 - produto.preco / produto.precoAntigo) * 100)
+            : 0;
+
+          const card = document.createElement('article');
+          card.className = 'product-card';
+          card.dataset.productId = String(produto.id);
+          card.dataset.category = produto.categoria || 'Acessórios';
+          card.dataset.searchText = `${produto.nome} ${produto.descricao} ${produto.categoria || ''}`.toLocaleLowerCase('pt-BR');
+          card.innerHTML = `
+            <div class="product-image">
+              ${produto.selo ? `<span class="product-badge">${escapeHTML(produto.selo)}</span>` : ''}
+              ${temDesconto ? `<span class="product-discount">-${descontoPct}%</span>` : ''}
+              <img src="${produto.imagem}" alt="${escapeHTML(produto.nome)}">
+            </div>
+            <div class="product-body">
+              <span class="product-weight">${escapeHTML(produto.categoria || 'Acessórios')}</span>
+              <h3>${escapeHTML(produto.nome)}</h3>
+              <p class="product-desc">${escapeHTML(produto.descricao)}</p>
+              <div class="product-price-row">
+                ${produto.preco > 0 ? `${temDesconto ? `<span class="product-price-old">${formatBRL(produto.precoAntigo)}</span>` : ''}<span class="product-price${temDesconto ? ' is-promo' : ''}">${formatBRL(produto.preco)}</span>` : '<span class="product-price">Consulte o preço</span>'}
+              </div>
+              <p class="stock-note">${Number(produto.estoque)>0 ? `Disponível: ${Number(produto.estoque)} un.` : 'Disponibilidade sob confirmação'} · Pedido mínimo: ${Number(produto.pedidoMinimo || 1)}</p>
+              ${(produto.precosVolume||[]).length ? `<div class="volume-prices"><strong>Preço por volume</strong>${produto.precosVolume.slice().sort((a,b)=>Number(a.quantidade)-Number(b.quantidade)).map(t=>`<span>${Number(t.quantidade)}+ un.: ${formatBRL(Number(t.preco))}/un.</span>`).join('')}</div>` : ''}
+              <div class="product-footer">
+                <div class="qty-stepper">
+                  <button type="button" class="qty-minus" aria-label="Diminuir quantidade">−</button>
+                  <span class="qty-value">${qtyState[produto.id]}</span>
+                  <button type="button" class="qty-plus" aria-label="Aumentar quantidade">+</button>
+                </div>
+                <button type="button" class="add-to-cart-btn">Adicionar</button>
+              </div>
+            </div>
+          `;
+
+          const qtyValueEl = card.querySelector('.qty-value');
+          card.querySelector('.qty-minus').addEventListener('click', () => {
+            qtyState[produto.id] = Math.max(1, qtyState[produto.id] - 1);
+            qtyValueEl.textContent = qtyState[produto.id];
+          });
+          card.querySelector('.qty-plus').addEventListener('click', () => {
+            qtyState[produto.id] = qtyState[produto.id] + 1;
+            qtyValueEl.textContent = qtyState[produto.id];
+          });
+          card.querySelector('.add-to-cart-btn').textContent = produto.preco > 0 ? 'Adicionar ao pedido' : 'Consultar produto';
+          card.querySelector('.add-to-cart-btn').addEventListener('click', () => {
+            if (!(produto.preco > 0)) { window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Olá! Gostaria de consultar preço e disponibilidade de: '+produto.nome)}`, '_blank'); return; }
+            if (qtyState[produto.id] < Number(produto.pedidoMinimo || 1)) { alert(`O pedido mínimo deste produto é ${Number(produto.pedidoMinimo || 1)} unidade(s).`); return; }
+            addToCart(produto.id, qtyState[produto.id]);
+            qtyState[produto.id] = 1;
+            qtyValueEl.textContent = 1;
+            renderCart();
+            openCart();
+          });
+
+          grid.appendChild(card);
+        });
+      }
+
+      function renderCart() {
+        const itens = getCartDetailed();
+        cartItemsEl.innerHTML = '';
+
+        if (itens.length === 0) {
+          cartItemsEl.innerHTML = '<p class="cart-empty">Seu carrinho está vazio.</p>';
+        } else {
+          itens.forEach((item) => {
+            const row = document.createElement('div');
+            row.className = 'cart-item';
+            row.innerHTML = `
+              <img src="${item.imagem}" alt="${escapeHTML(item.nome)}">
+              <div class="cart-item-info">
+                <h4>${escapeHTML(item.nome)}</h4>
+                <span class="cart-item-price">${formatBRL(getUnitPrice(item, item.quantidade))} por unidade</span><small class="cart-item-subtotal">Subtotal: ${formatBRL(getUnitPrice(item, item.quantidade) * item.quantidade)}</small>
+                <div class="cart-item-controls">
+                  <div class="qty-stepper">
+                    <button type="button" class="cart-minus" aria-label="Diminuir">−</button>
+                    <span>${item.quantidade}</span>
+                    <button type="button" class="cart-plus" aria-label="Aumentar">+</button>
+                  </div>
+                </div>
+              </div>
+            `;
+            row.querySelector('.cart-minus').addEventListener('click', () => {
+              const prod=getAllProducts().find(p=>String(p.id)===String(item.id)); const minimo=Number(prod?.pedidoMinimo||1); if(item.quantidade<=minimo){alert(`A quantidade mínima deste produto é ${minimo} unidade(s).`);return;}
+              updateCartQuantity(item.id, item.quantidade - 1);
+              renderCart();
+            });
+            row.querySelector('.cart-plus').addEventListener('click', () => {
+              updateCartQuantity(item.id, item.quantidade + 1);
+              renderCart();
+            });
+            cartItemsEl.appendChild(row);
+          });
+        }
+
+        const totalComVolume = itens.reduce((total,item)=>total + getUnitPrice(item,item.quantidade)*item.quantidade,0);
+        cartTotalEl.textContent = formatBRL(totalComVolume);
+        const count = getCartCount();
+        cartBadge.textContent = count;
+        cartBadge.hidden = count === 0;
+      }
+
+      // ---- Abrir/fechar painel do carrinho ----
+      const overlay = document.getElementById('cartOverlay');
+      const panel = document.getElementById('cartPanel');
+      function openCart() {
+        overlay.classList.add('open');
+        panel.classList.add('open');
+      }
+      function closeCart() {
+        overlay.classList.remove('open');
+        panel.classList.remove('open');
+      }
+      document.getElementById('cartToggle').addEventListener('click', openCart);
+      document.getElementById('cartClose').addEventListener('click', closeCart);
+      overlay.addEventListener('click', closeCart);
+
+      // ---- Finalizar pedido via WhatsApp ----
+      document.getElementById('checkoutBtn').addEventListener('click', async () => {
+        if (!window.SC_AUTH_USER) { window.SC_OPEN_ACCOUNT?.('login'); alert('Entre ou cadastre-se antes de pagar.'); return; }
+        const profileResponse=await fetch('/api/me',{credentials:'same-origin'});const profileData=await profileResponse.json();const profile=profileData.user?.profile||{};
+        if(!profile.name||!profile.phone||!profile.address||!profile.city||!profile.state){window.SC_OPEN_ACCOUNT?.('login');alert('Complete e salve seu perfil com nome, telefone e endereço antes de continuar.');return;}
+        const itens=getCartDetailed();if(!itens.length)return;
+        const items=itens.map(i=>({title:i.nome,quantity:i.quantidade,unit_price:Number(getUnitPrice(i,i.quantidade).toFixed(2))}));
+        const btn=document.getElementById('checkoutBtn');const old=btn.textContent;btn.disabled=true;btn.textContent='Preparando pagamento...';
+        try{const r=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({items})});const d=await r.json();if(!r.ok)throw new Error(d.error||'Não foi possível iniciar o pagamento.');window.location.href=d.checkoutUrl}
+        catch(e){alert(e.message+'\n\nO Mercado Pago precisa ser configurado pelo responsável da loja.');}
+        finally{btn.disabled=false;btn.textContent=old}
+      });
+
+      (async()=>{try{const r=await fetch('/api/products',{cache:'no-store'});if(r.ok){const d=await r.json();if(Array.isArray(d.products))localStorage.setItem('sc_server_products_v1',JSON.stringify(d.products));}}catch(err){console.warn('Usando catálogo local temporariamente.',err)}renderProducts();renderCart();window.SC_APPLY_CATALOG?.();})();
+    })();
+  </script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+ const search=document.getElementById('catalogSearch'), select=document.getElementById('catalogCategory'), sort=document.getElementById('catalogSort'), availability=document.getElementById('catalogAvailability'), minPrice=document.getElementById('catalogMinPrice'), maxPrice=document.getElementById('catalogMaxPrice'), chips=document.getElementById('categoryChips'), grid=document.getElementById('productGrid'), pager=document.getElementById('catalogPagination'), count=document.getElementById('catalogResultCount');
+ if(!search||!select||!grid||typeof DEFAULT_PRODUCTS==='undefined')return;
+ const getProducts=()=>typeof getAllProducts==='function'?getAllProducts():DEFAULT_PRODUCTS;
+ const cats=[...new Set(getProducts().map(p=>p.categoria||'Acessórios'))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+ cats.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;select.appendChild(o);const b=document.createElement('button');b.type='button';b.className='category-chip';b.textContent=c;b.setAttribute('aria-label','Filtrar categoria '+c);b.addEventListener('click',()=>{select.value=select.value===c?'':c;window.SC_CATALOG_STATE.page=1;apply()});chips.appendChild(b)});
+ function apply(){
+  const products=getProducts();
+  const known=new Set([...select.options].map(o=>o.value));products.forEach(p=>{const c=p.categoria||'Acessórios';if(!known.has(c)){const o=document.createElement('option');o.value=c;o.textContent=c;select.appendChild(o);known.add(c);const b=document.createElement('button');b.type='button';b.className='category-chip';b.textContent=c;b.addEventListener('click',()=>{select.value=select.value===c?'':c;window.SC_CATALOG_STATE.page=1;apply()});chips.appendChild(b)}});
+  const q=search.value.toLocaleLowerCase('pt-BR').trim(), cat=select.value, order=sort?sort.value:'relevance', stock=availability?.value||'', min=Number(minPrice?.value||0), max=maxPrice?.value?Number(maxPrice.value):Infinity;
+  let cards=[...grid.querySelectorAll('.product-card')].filter(card=>{const p=products.find(x=>String(x.id)===String(card.dataset.productId))||products.find(x=>x.nome===card.querySelector('h3')?.textContent)||{};const price=Number(p.preco||0);const stockNum=Number(p.estoque||0);return card.dataset.searchText.includes(q)&&(!cat||card.dataset.category===cat)&&(!stock||(stock==='stock'?stockNum>0:stockNum===0))&&price>=min&&price<=max});
+  cards.sort((a,b)=>{const pa=products.find(p=>String(p.id)===String(a.dataset.productId))||products.find(p=>p.nome===a.querySelector('h3')?.textContent)||{},pb=products.find(p=>String(p.id)===String(b.dataset.productId))||products.find(p=>p.nome===b.querySelector('h3')?.textContent)||{};if(order==='name-asc')return (pa.nome||'').localeCompare(pb.nome||'','pt-BR');if(order==='price-asc')return Number(pa.preco||0)-Number(pb.preco||0);if(order==='price-desc')return Number(pb.preco||0)-Number(pa.preco||0);if(order==='stock')return Number(pb.estoque||0)-Number(pa.estoque||0);return 0});
+  const total=cards.length, size=window.SC_CATALOG_STATE?.pageSize||15, pages=Math.max(1,Math.ceil(total/size));let page=window.SC_CATALOG_STATE?.page||1;page=Math.min(page,pages);window.SC_CATALOG_STATE.page=page;const from=(page-1)*size;
+  grid.querySelectorAll('.product-card').forEach(c=>{c.dataset.scPaginationHidden='1';c.style.display='none'});cards.slice(from,from+size).forEach(c=>{c.dataset.scPaginationHidden='0';c.style.display='';grid.appendChild(c)});
+  count.textContent=`${total} produto(s) encontrado(s) · página ${page} de ${pages}`;
+  pager.innerHTML='';if(pages>1){const make=(label,n,disabled=false,active=false)=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.disabled=disabled;b.className=active?'active':'';b.setAttribute('aria-label',label);b.addEventListener('click',()=>{window.SC_CATALOG_STATE.page=n;apply();document.getElementById('produtos').scrollIntoView({behavior:'smooth',block:'start'})});pager.appendChild(b)};make('‹ Anterior',page-1,page===1);const lo=Math.max(1,page-2),hi=Math.min(pages,page+2);for(let i=lo;i<=hi;i++)make(String(i),i,false,i===page);make('Próxima ›',page+1,page===pages)}
+  chips.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.textContent===cat));
+ }
+ // Expose catalog filtering/pagination so it can run again after asynchronous product loading.
+ window.SC_APPLY_CATALOG = apply;
+ [search,select,sort,availability,minPrice,maxPrice].filter(Boolean).forEach(el=>el.addEventListener(el===search||el===minPrice||el===maxPrice?'input':'change',()=>{window.SC_CATALOG_STATE.page=1;apply()}));
+ apply();
+ const overlay=document.getElementById('historyOverlay'), modal=document.getElementById('historyModal'), list=document.getElementById('historyList');
+ const money=n=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(Number(n)||0);
+ async function showHistory(){let orders=[];try{const r=await fetch('/api/orders',{credentials:'same-origin'});if(r.ok){const d=await r.json();orders=(d.orders||[]).map(o=>({codigo:o.id,data:o.createdAt,cliente:'Pedido da conta',cidade:'',total:o.total,itens:(o.items||[]).map(i=>({quantidade:i.quantity,nome:i.title,subtotal:(Number(i.quantity)||1)*(Number(i.unit_price)||0)})),status:o.status,entrega:o.fulfillmentStatus}))}else{orders=JSON.parse(localStorage.getItem('sc_order_history')||'[]')}}catch(e){orders=JSON.parse(localStorage.getItem('sc_order_history')||'[]')}list.innerHTML='';if(!orders.length){list.innerHTML='<div class="history-empty"><strong>Nenhum pedido salvo ainda</strong><p>Quando você montar um pedido e abrir o WhatsApp, ele aparecerá aqui neste navegador.</p></div>'}else{orders.forEach(o=>{const el=document.createElement('article');el.className='history-order';const date=o.data?new Date(o.data).toLocaleString('pt-BR'):'Data não informada';el.innerHTML=`<div class="history-order-top"><strong>${safeText(o.codigo||'Pedido')}</strong><span>${safeText(date)}</span></div><p>${safeText(o.cliente||'')} · ${safeText(o.cidade||'')} ${o.status?`· Pagamento: ${safeText(o.status)} · Entrega: ${safeText(o.entrega||'aguardando')}`:''}</p><div class="history-lines">${(o.itens||[]).map(i=>`<span>${Number(i.quantidade)||1}× ${safeText(i.nome)} <b>${money(i.subtotal)}</b></span>`).join('')}</div><div class="history-total"><span>Total estimado</span><strong>${money(o.total)}</strong></div>`;list.appendChild(el)})}overlay.hidden=false;modal.hidden=false;document.body.classList.add('modal-open')}
+ function closeHistory(){overlay.hidden=true;modal.hidden=true;document.body.classList.remove('modal-open')}
+ function safeText(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+ document.getElementById('historyToggle')?.addEventListener('click',showHistory);document.getElementById('historyClose')?.addEventListener('click',closeHistory);overlay?.addEventListener('click',closeHistory);document.addEventListener('keydown',e=>{if(e.key==='Escape')closeHistory()});document.getElementById('historyClear')?.addEventListener('click',()=>{if(confirm('Apagar o histórico de pedidos salvo somente neste navegador?')){localStorage.removeItem('sc_order_history');showHistory()}});
+});
+</script>
+<style>
+.account-overlay{position:fixed;inset:0;background:rgba(20,20,20,.55);z-index:1100}.account-modal{position:fixed;z-index:1101;left:50%;top:50%;transform:translate(-50%,-50%);width:min(460px,calc(100vw - 28px));max-height:90vh;overflow:auto;background:#fff;border-radius:20px;padding:28px;box-shadow:0 24px 80px #0003;color:#292929}.account-modal[hidden],.account-overlay[hidden]{display:none}.account-modal h2{margin:8px 0}.account-intro,.account-security-note{font-size:13px;line-height:1.5;color:#666}.account-modal label{display:block;font-size:13px;font-weight:700;margin:14px 0 6px}.account-modal input{box-sizing:border-box;width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;font:inherit}.account-tabs{display:flex;gap:8px;margin:18px 0}.account-tabs button{flex:1;padding:11px;border:1px solid #ddd;border-radius:10px;background:#fff;font-weight:700;cursor:pointer}.account-tabs button.active{background:#fff0e5;border-color:#f36f21;color:#b94e0b}.account-close{position:absolute;right:16px;top:12px;border:0;background:none;font-size:28px;cursor:pointer}.account-modal #accountMessage{font-size:13px;color:#b94e0b;min-height:18px}.account-modal #accountMessage.success{color:#247447}.account-modal .checkout-btn{width:100%;justify-content:center;margin-top:8px}.customer-profile-form{border-top:1px solid #eee;margin-top:16px;padding-top:10px}.customer-profile-form h3{font-size:16px}.profile-two{display:grid;grid-template-columns:2fr 1fr;gap:10px}.customer-profile-form input{margin-bottom:3px}.customer-profile-form #profileMessage{font-size:13px;color:#247447}
+</style>
+<script>
+(function(){
+ const modal=document.getElementById('accountModal'),overlay=document.getElementById('accountOverlay'),form=document.getElementById('accountForm'),msg=document.getElementById('accountMessage'),nameInput=document.getElementById('accountName'),nameLabel=document.getElementById('accountNameLabel'),submit=document.getElementById('accountSubmit'),loginTab=document.getElementById('loginTab'),registerTab=document.getElementById('registerTab'),signed=document.getElementById('accountSignedIn'),welcome=document.getElementById('accountWelcome');
+ let mode='login';
+ function setMode(m){mode=m;loginTab.classList.toggle('active',m==='login');registerTab.classList.toggle('active',m==='register');nameInput.hidden=nameLabel.hidden=m!=='register';nameInput.required=m==='register';document.getElementById('accountPassword').autocomplete=m==='login'?'current-password':'new-password';submit.textContent=m==='login'?'Entrar':'Criar minha conta';msg.textContent='';msg.className='';form.hidden=!!window.SC_AUTH_USER;signed.hidden=!window.SC_AUTH_USER;document.getElementById('accountTitle').textContent=window.SC_AUTH_USER?'Minha conta':m==='login'?'Entre na sua conta':'Criar cadastro';}
+ function open(m='login'){modal.hidden=false;overlay.hidden=false;document.body.classList.add('modal-open');setMode(m)}function close(){modal.hidden=true;overlay.hidden=true;document.body.classList.remove('modal-open')}
+ window.SC_OPEN_ACCOUNT=open;window.SC_AUTH_USER=null;
+ document.getElementById('accountToggle').addEventListener('click',()=>open(window.SC_AUTH_USER?'login':'login'));document.getElementById('accountClose').addEventListener('click',close);overlay.addEventListener('click',close);loginTab.addEventListener('click',()=>setMode('login'));registerTab.addEventListener('click',()=>setMode('register'));
+ async function refresh(){try{const r=await fetch('/api/me',{credentials:'same-origin'});if(r.ok){const d=await r.json();window.SC_AUTH_USER=d.user||null;fillProfile(d.user?.profile||{})}}catch(e){} document.getElementById('accountToggle').textContent=window.SC_AUTH_USER?'Minha conta':'Entrar / cadastrar';}
+ function fillProfile(p){for(const k of ['Name','Phone','Cpf','Cep','Address','Complement','City','State']){const el=document.getElementById('profile'+k);if(el)el.value=p[k.toLowerCase()]||''}}
+ document.getElementById('profileForm').addEventListener('submit',async e=>{e.preventDefault();const p={name:document.getElementById('profileName').value.trim(),phone:document.getElementById('profilePhone').value.trim(),cpf:document.getElementById('profileCpf').value.trim(),cep:document.getElementById('profileCep').value.trim(),address:document.getElementById('profileAddress').value.trim(),complement:document.getElementById('profileComplement').value.trim(),city:document.getElementById('profileCity').value.trim(),state:document.getElementById('profileState').value.trim().toUpperCase()};const m=document.getElementById('profileMessage');try{const r=await fetch('/api/profile',{method:'PUT',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify(p)});const d=await r.json();if(!r.ok)throw new Error(d.error||'Não foi possível salvar.');m.textContent='Dados salvos com sucesso.';window.SC_AUTH_USER=d.user}catch(err){m.textContent=err.message}});
+ form.addEventListener('submit',async e=>{e.preventDefault();msg.textContent='';const email=document.getElementById('accountEmail').value.trim().toLowerCase(),password=document.getElementById('accountPassword').value;const payload={email,password};if(mode==='register')payload.name=nameInput.value.trim();submit.disabled=true;try{const r=await fetch('/api/'+(mode==='register'?'register':'login'),{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify(payload)});const d=await r.json();if(!r.ok)throw new Error(d.error||'Não foi possível concluir.');window.SC_AUTH_USER=d.user;msg.textContent=mode==='register'?'Cadastro realizado com sucesso!':'Login realizado com sucesso!';msg.className='success';document.getElementById('accountToggle').textContent='Minha conta';form.hidden=true;signed.hidden=false;welcome.textContent='Você está conectado como '+d.user.email;fillProfile(d.user.profile||{});setTimeout(()=>{form.hidden=true;signed.hidden=false},150)}catch(err){msg.textContent=err.message||'Não foi possível conectar ao servidor. Acesse pelo servidor Node.js e tente novamente.'}finally{submit.disabled=false}});
+ document.getElementById('accountLogout').addEventListener('click',async()=>{try{await fetch('/api/logout',{method:'POST',credentials:'same-origin'})}catch(e){}window.SC_AUTH_USER=null;document.getElementById('accountToggle').textContent='Entrar / cadastrar';setMode('login');open('login')});
+ refresh();
+})();
+</script>
+<script>
+// Atalhos de teclado e carrinho acessível
+window.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('cartPanel')?.classList.remove('open');document.getElementById('cartOverlay')?.classList.remove('open')}});
+</script>
+
+<!-- V14: favoritos, ficha rápida e recompra a partir do histórico -->
+<style>
+.sc-product-actions{display:flex;gap:8px;margin-top:10px}.sc-product-actions button{border:1px solid #e3e5e8;background:#fff;color:#242424;border-radius:10px;padding:9px 11px;font-weight:700;cursor:pointer}.sc-product-actions .sc-favorite{flex:0 0 auto;color:#e66a1e;font-size:18px}.sc-product-actions .sc-details{flex:1}.sc-favorite.is-active{background:#fff0e5;border-color:#f47b20}.sc-favorites-filter{border:1px solid #f47b20;background:#fff;color:#b94e0b;border-radius:10px;padding:11px 14px;font-weight:700;cursor:pointer}.sc-favorites-filter.active{background:#f47b20;color:#fff}.sc-detail-overlay[hidden]{display:none!important}.sc-detail-overlay{position:fixed;inset:0;background:#1119;z-index:1300;display:flex;align-items:center;justify-content:center;padding:18px}.sc-detail-modal{position:relative;width:min(760px,100%);max-height:90vh;overflow:auto;background:#fff;color:#242424;border-radius:20px;padding:24px;box-shadow:0 24px 80px #0004;display:grid;grid-template-columns:minmax(180px, .85fr) 1.15fr;gap:24px}.sc-detail-modal img{width:100%;max-height:360px;object-fit:contain;background:#f7f7f7;border-radius:14px}.sc-detail-modal h2{margin:8px 0}.sc-detail-modal p{line-height:1.6;color:#555}.sc-detail-close{position:absolute;right:12px;top:10px;border:0;background:#f2f2f2;border-radius:50%;width:36px;height:36px;font-size:23px;cursor:pointer}.sc-detail-price{font-size:25px;font-weight:800;color:#e66a1e}.sc-repeat-order{margin-top:14px;border:0;border-radius:9px;padding:10px 14px;background:#f47b20;color:#fff;font-weight:800;cursor:pointer}.history-order .sc-repeat-order{margin-top:12px}.sc-favorite-count{font-size:12px;margin-left:4px}@media(max-width:600px){.sc-detail-modal{grid-template-columns:1fr;padding:18px;gap:14px}.sc-detail-modal img{max-height:220px}.sc-product-actions button{font-size:13px}.sc-favorites-filter{width:100%}}
+</style>
+<script>
+(function(){
+ const FAV_KEY='sc_favorite_products_v1';
+ const readFav=()=>{try{return JSON.parse(localStorage.getItem(FAV_KEY)||'[]').map(String)}catch{return []}};
+ const saveFav=a=>localStorage.setItem(FAV_KEY,JSON.stringify([...new Set(a.map(String))]));
+ const products=()=>typeof getAllProducts==='function'?getAllProducts():(typeof DEFAULT_PRODUCTS!=='undefined'?DEFAULT_PRODUCTS:[]);
+ const safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const money=n=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(Number(n)||0);
+ let favoritesOnly=false;
+ const tools=document.querySelector('.catalog-tools');
+ if(tools){const b=document.createElement('button');b.type='button';b.className='sc-favorites-filter';b.id='scFavoritesFilter';b.textContent='♡ Favoritos';b.setAttribute('aria-pressed','false');tools.appendChild(b);b.addEventListener('click',()=>{favoritesOnly=!favoritesOnly;b.classList.toggle('active',favoritesOnly);b.setAttribute('aria-pressed',String(favoritesOnly));b.textContent=favoritesOnly?'♥ Mostrar todos':'♡ Favoritos';applyFavoriteFilter()})}
+ function applyFavoriteFilter(){document.querySelectorAll('.product-card').forEach(card=>{const isFav=readFav().includes(String(card.dataset.productId));card.dataset.scFavorite=isFav?'1':'0';if(favoritesOnly&&!isFav)card.style.display='none';else if(card.dataset.scPaginationHidden!=='1')card.style.display=''});const c=document.getElementById('catalogResultCount');if(c&&favoritesOnly){const n=[...document.querySelectorAll('.product-card')].filter(x=>x.dataset.scFavorite==='1').length;c.textContent=`${n} produto(s) favorito(s)`}}
+ let overlay;
+ function ensureModal(){if(overlay)return overlay;overlay=document.createElement('div');overlay.className='sc-detail-overlay';overlay.hidden=true;overlay.innerHTML='<section class="sc-detail-modal" role="dialog" aria-modal="true" aria-labelledby="scDetailTitle"><button class="sc-detail-close" type="button" aria-label="Fechar">×</button><img id="scDetailImage" alt=""><div><span id="scDetailCategory" class="eyebrow"></span><h2 id="scDetailTitle"></h2><p id="scDetailDescription"></p><div id="scDetailPrice" class="sc-detail-price"></div><p id="scDetailStock"></p><div id="scDetailTiers"></div><button type="button" id="scDetailAdd" class="checkout-btn">Adicionar ao pedido</button></div></section>';document.body.appendChild(overlay);overlay.addEventListener('click',e=>{if(e.target===overlay||e.target.closest('.sc-detail-close')){overlay.hidden=true;document.body.classList.remove('modal-open')}});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay&&!overlay.hidden){overlay.hidden=true;document.body.classList.remove('modal-open')}});return overlay}
+ function showDetails(p){const m=ensureModal();m.querySelector('#scDetailImage').src=p.imagem||'';m.querySelector('#scDetailImage').alt=p.nome||'Produto';m.querySelector('#scDetailCategory').textContent=p.categoria||'Produto';m.querySelector('#scDetailTitle').textContent=p.nome||'Produto';m.querySelector('#scDetailDescription').textContent=p.descricao||'Consulte nossa equipe para mais informações.';m.querySelector('#scDetailPrice').textContent=Number(p.preco)>0?money(p.preco):'Consulte o preço';m.querySelector('#scDetailStock').textContent=`Estoque informado: ${Number(p.estoque)>0?Number(p.estoque)+' unidade(s)':'consulte disponibilidade'} · Pedido mínimo: ${Number(p.pedidoMinimo||1)}`;m.querySelector('#scDetailTiers').innerHTML=(p.precosVolume||[]).length?'<strong>Preços por volume</strong><ul>'+p.precosVolume.slice().sort((a,b)=>Number(a.quantidade)-Number(b.quantidade)).map(t=>`<li>${Number(t.quantidade)}+ unidades: ${money(t.preco)} / un.</li>`).join('')+'</ul>':'';const add=m.querySelector('#scDetailAdd');add.disabled=!(Number(p.preco)>0);add.textContent=Number(p.preco)>0?'Adicionar ao pedido':'Preço sob consulta';add.onclick=()=>{if(typeof addToCart==='function'){addToCart(p.id,Math.max(1,Number(p.pedidoMinimo)||1));m.hidden=true;document.body.classList.remove('modal-open');document.getElementById('cartToggle')?.click()} };m.hidden=false;document.body.classList.add('modal-open')}
+ function decorate(){document.querySelectorAll('.product-card').forEach(card=>{if(card.dataset.scDecorated==='1')return;const id=String(card.dataset.productId||''),p=products().find(x=>String(x.id)===id);if(!p)return;card.dataset.scDecorated='1';const actions=document.createElement('div');actions.className='sc-product-actions';const fav=document.createElement('button');fav.type='button';fav.className='sc-favorite';fav.setAttribute('aria-label','Adicionar aos favoritos');const details=document.createElement('button');details.type='button';details.className='sc-details';details.textContent='Ver detalhes';function refresh(){const yes=readFav().includes(id);fav.classList.toggle('is-active',yes);fav.textContent=yes?'♥':'♡';fav.setAttribute('aria-pressed',String(yes));fav.setAttribute('aria-label',yes?'Remover dos favoritos':'Adicionar aos favoritos')}fav.addEventListener('click',()=>{let a=readFav();a=a.includes(id)?a.filter(x=>x!==id):a.concat(id);saveFav(a);refresh();applyFavoriteFilter()});details.addEventListener('click',()=>showDetails(p));actions.append(fav,details);card.querySelector('.product-body')?.appendChild(actions);refresh()});applyFavoriteFilter()}
+ const grid=document.getElementById('productGrid');if(grid){new MutationObserver(()=>decorate()).observe(grid,{childList:true});decorate()}
+ // Botão de recompra nos pedidos: relaciona itens ao catálogo atual por nome exato normalizado.
+ const historyList=document.getElementById('historyList');
+ function decorateHistory(){historyList?.querySelectorAll('.history-order').forEach(order=>{if(order.querySelector('.sc-repeat-order'))return;const lines=[...order.querySelectorAll('.history-lines span')].map(el=>{const m=el.textContent.match(/^\s*(\d+)×\s*(.*?)\s+(?:R\$|$)/);return m?{quantity:Number(m[1]),name:m[2].trim()}:null}).filter(Boolean);if(!lines.length)return;const b=document.createElement('button');b.type='button';b.className='sc-repeat-order';b.textContent='Repetir este pedido';b.addEventListener('click',()=>{const all=products();let added=0,missing=[];lines.forEach(line=>{const p=all.find(x=>String(x.nome||'').trim().toLocaleLowerCase('pt-BR')===line.name.toLocaleLowerCase('pt-BR'));if(p&&Number(p.preco)>0){addToCart(p.id,line.quantity);added++}else missing.push(line.name)});if(added){document.getElementById('cartToggle')?.click();alert(`Adicionamos ${added} item(ns) ao carrinho. Confira preços e disponibilidade atualizados antes de pagar.`)}if(missing.length)alert('Não encontramos estes itens no catálogo atual: '+missing.join(', '))});order.appendChild(b)})}
+ if(historyList)new MutationObserver(()=>decorateHistory()).observe(historyList,{childList:true,subtree:true});
+})();
+</script>
+
+</body>
+</html>

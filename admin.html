@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'unsafe-inline'; base-uri 'self'; frame-ancestors 'none';">
+  <title>Souza & Carvalho — Painel do administrador</title>
+  <!-- ===== Favicon (ícone da aba do navegador) =====
+       EDITÁVEL: hoje usa a logo. Se preferir a patinha azul — bem mais
+       legível em tamanho pequeno — comente as 3 linhas abaixo e
+       descomente as 2 do bloco seguinte. -->
+  <link rel="icon" href="images/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  <!--
+  <link rel="icon" type="image/svg+xml" href="images/favicon-pata.svg">
+  <link rel="icon" href="images/favicon-pata.ico" sizes="any">
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Estilos específicos desta página (painel do admin) */
+    .admin-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 60px 28px 100px;
+    }
+    .admin-wrap h1 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      margin: 0 0 8px;
+    }
+    .admin-wrap > p {
+      color: var(--text-muted);
+      margin: 0 0 34px;
+    }
+
+    .admin-card {
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 26px;
+      margin-bottom: 26px;
+    }
+    .admin-card h2 {
+      font-family: var(--font-display);
+      font-size: 17px;
+      margin: 0 0 18px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .field label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .field input,
+    .field textarea {
+      background: var(--bg-alt);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 11px 13px;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 14px;
+      outline: none;
+    }
+    .field input:focus,
+    .field textarea:focus { border-color: var(--blue); }
+    .field textarea { resize: vertical; min-height: 70px; }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .image-preview {
+      width: 84px;
+      height: 84px;
+      border-radius: 12px;
+      background: var(--bg-alt);
+      border: 1px dashed var(--line);
+      object-fit: cover;
+      margin-top: 8px;
+    }
+
+    .admin-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .admin-list-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+    .admin-list-item img {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: var(--bg-alt);
+      flex-shrink: 0;
+    }
+    .admin-list-item .info {
+      flex: 1;
+      min-width: 0;
+    }
+    .admin-list-item .info h4 {
+      margin: 0 0 2px;
+      font-size: 13.5px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .admin-list-item .info span {
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    .login-card {
+      max-width: 360px;
+      margin: 100px auto;
+      text-align: center;
+    }
+    .login-card .field { text-align: left; }
+
+    /* ---- Cartão de publicação ---- */
+    .publish-status {
+      font-size: 13.5px;
+      margin: 0 0 14px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      line-height: 1.5;
+    }
+    .publish-status.pendente {
+      color: #8a6100;
+      background: #fff4d6;
+      border: 1px solid #f0d799;
+    }
+    .publish-status.publicado {
+      color: var(--text-muted);
+      background: rgba(0, 0, 0, 0.03);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    .publish-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .publish-steps {
+      margin: 16px 0 0;
+      padding-left: 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .publish-steps code {
+      background: rgba(0, 0, 0, 0.06);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 12.5px;
+    }
+    .field-hint {
+      display: block;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+  </style>
+
+<style id="sc-admin-black-green-theme">
+:root{--bg:#050706;--bg-alt:#0b100d;--bg-card:#101712;--line:#26372b;--blue:#20c45a;--blue-bright:#63e68b;--blue-dim:#123820;--blue-glow:rgba(32,196,90,.38);--text:#f3f7f4;--text-muted:#a0afa5}
+body{background:#050706!important;color:#f3f7f4!important}
+header,.site-header,.admin-header,.panel-header{background:#080d09!important;color:#f3f7f4!important;border-color:#26372b!important}
+.admin-card,.admin-panel,.panel-card,.card,.stat-card,.admin-list-item,.dashboard-card{background:#101712!important;color:#f3f7f4!important;border-color:#26372b!important}
+input,select,textarea{background:#0b100d!important;color:#f3f7f4!important;border:1px solid #314638!important;border-radius:8px}
+button,.btn,.product-edit,.admin-nav button{background:#20c45a;color:#061009;border-color:#20c45a}
+button:hover,.btn:hover,.product-edit:hover{background:#63e68b;color:#061009}
+.product-remove{background:#301414!important;color:#ffb4b4!important;border-color:#7f3030!important}
+label,small,p,span{color:inherit}
+.admin-list-item .info span,.muted,.text-muted{color:#a0afa5!important}
+#loginScreen,.login-card{background:#101712!important;color:#f3f7f4!important;border-color:#26372b!important}
+</style>
+<style id="sc-strict-black-green">:root{color-scheme:dark}html,body,#loginScreen{background:#050706!important;color:#f3f7f4!important}header,.admin-header,.panel-header,.admin-card,.admin-panel,.panel-card,.card,.stat-card,.dashboard-card,.admin-list-item,.login-card{background:#101712!important;color:#f3f7f4!important;border-color:#26372b!important}input,select,textarea{background:#0b100d!important;color:#f3f7f4!important;border-color:#314638!important}button,.btn,.product-edit,.admin-nav button{background:#123820!important;color:#63e68b!important;border-color:#20c45a!important}button:hover,.btn:hover,.product-edit:hover{background:#20c45a!important;color:#061009!important}.product-remove{background:#301414!important;color:#ffb4b4!important;border-color:#7f3030!important}#analyticsGrid>div{background:#101712!important;border-color:#26372b!important}#analyticsGrid>div div{color:#a0afa5!important}#analyticsGrid>div strong{color:#63e68b!important}form[style*="width:min(620px"]{background:#101712!important;color:#f3f7f4!important}label,small,p,span{color:inherit}.muted,.text-muted{color:#a0afa5!important}</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a href="index.html" class="brand">
+        <img src="images/logo.jpg" alt="Souza & Carvalho Rações">
+        Souza & Carvalho
+      </a>
+      <nav class="main-nav">
+        <a href="index.html">Ver loja</a>
+      </nav>
+      <div></div>
+    </div>
+  </header>
+
+  <!-- ===== Tela de login simples ===== -->
+  <div class="admin-wrap login-card" id="loginScreen">
+    <h1>Área do administrador</h1>
+    <p>Acesso administrativo para manter o catálogo atualizado.</p>
+    <div class="admin-card">
+      <form id="loginForm">
+        <div class="field">
+          <label>E-mail administrativo</label><input type="email" id="loginEmail" required placeholder="admin@seudominio.com" autocomplete="username"><label>Senha</label>
+          <input type="password" id="loginPassword" required placeholder="Senha administrativa" autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Entrar</button>
+        <p id="loginMsg" style="color:#e05d5d; font-size:12.5px; margin:12px 0 0; min-height:16px;"></p>
+      </form>
+      <!-- EDITÁVEL: a senha NÃO fica mais em texto puro aqui — veja o
+           comentário ADMIN_PASSWORD_HASH no script no fim da página
+           pra saber como trocar a senha. -->
+    </div>
+  </div>
+
+  <!-- ===== Painel (só aparece depois do login) ===== -->
+  <div class="admin-wrap" id="adminScreen" hidden>
+    <div class="admin-card" id="adminAccountsCard">
+      <h2>Contas administrativas</h2>
+      <p>Somente o administrador principal pode criar novas contas. Use senhas fortes e individuais.</p>
+      <form id="createAdminForm">
+        <div class="field-row"><div class="field"><label>Nome</label><input id="newAdminName" required maxlength="100" placeholder="Nome do administrador"></div><div class="field"><label>E-mail</label><input id="newAdminEmail" type="email" required placeholder="admin@empresa.com"></div></div>
+        <div class="field"><label>Senha (mínimo 10 caracteres)</label><input id="newAdminPassword" type="password" required minlength="10" autocomplete="new-password"></div>
+        <button class="btn btn-primary" type="submit">Adicionar administrador</button><p id="adminAccountMessage" role="status"></p>
+      </form><div id="adminAccountsList"></div>
+    </div>
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px;">
+      <div>
+        <h1>Gerenciar produtos</h1>
+        <p>Gerencie o catálogo de atacado, preços, imagens, estoque e condições por volume.</p>
+      </div>
+      <button type="button" class="btn btn-ghost" id="logoutBtn" style="white-space:nowrap;">Sair</button>
+    </div>
+
+    <div class="admin-card" id="analyticsCard">
+      <h2>Visão geral da loja</h2><p>Indicadores calculados a partir dos pedidos e produtos salvos no servidor.</p>
+      <button type="button" class="btn btn-primary" id="refreshAnalytics">Atualizar indicadores</button>
+      <div id="analyticsGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:16px"></div>
+      <div id="lowStockList" style="margin-top:14px"></div>
+    </div>
+    <div class="admin-card" id="inventoryCard">
+      <h2>Movimentação de estoque</h2><p>Registre entradas e saídas manuais com histórico de auditoria.</p>
+      <form id="stockAdjustForm"><div class="field-row"><div class="field"><label>Produto</label><select id="stockProduct" required></select></div><div class="field"><label>Alteração (+ entrada / - saída)</label><input id="stockDelta" type="number" step="1" required placeholder="Ex.: 10 ou -2"></div></div><div class="field"><label>Motivo</label><input id="stockReason" required maxlength="160" placeholder="Compra recebida, perda, correção..."></div><button class="btn btn-primary" type="submit">Registrar movimentação</button><span id="stockMessage" role="status"></span></form>
+      <div id="stockHistory" style="margin-top:14px"></div>
+    </div>
+    <div class="admin-card">
+      <h2>+ Adicionar produto</h2>
+      <form id="productForm">
+        <div class="field">
+          <label>Nome do produto</label>
+          <input type="text" name="nome" required placeholder="Ex.: Seda premium king size">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Embalagem / tamanho</label>
+            <input type="text" name="peso" required placeholder="Ex.: caixa com 10 unidades">
+          </div>
+          <div class="field">
+            <label>Preço (R$)</label>
+            <input type="number" name="preco" step="0.01" min="0" required placeholder="Ex.: 159.90">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Preço antigo (opcional)</label>
+            <input type="number" name="precoAntigo" step="0.01" min="0" placeholder="Ex: 199.90">
+            <span class="field-hint">Preencha só se o produto estiver em promoção. Aparece riscado ao lado do preço novo.</span>
+          </div>
+          <div class="field">
+            <label>Selo (opcional)</label>
+            <select name="selo">
+              <option value="">Nenhum</option>
+              <option value="Oferta">Oferta</option>
+              <option value="Mais vendido">Mais vendido</option>
+              <option value="Novo">Novo</option>
+              <option value="Últimas unidades">Últimas unidades</option>
+              <option value="Frete grátis">Frete grátis</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Categoria</label><select name="categoria"><option>Acessórios</option><option>Sedas</option><option>Piteiras</option><option>Filtros</option><option>Tabacos</option><option>Bongs</option><option>Narguilés e peças</option><option>Cuias e rosh</option><option>Slicks</option><option>Eletrônicos</option><option>Head shop e acessórios</option><option>Tesouras</option></select></div>
+          <div class="field"><label>Pedido mínimo (unidades)</label><input type="number" name="pedidoMinimo" min="1" value="1" required></div>
+        </div>
+        <div class="field-row"><div class="field"><label>Estoque (0 = não informado)</label><input type="number" name="estoque" min="0" value="0" required></div><div class="field"><label>Faixas de preço por volume (JSON)</label><input name="precosVolume" placeholder='[{"quantidade":10,"preco":8.5}]'><span class="field-hint">Ex.: [{"quantidade":10,"preco":8.5},{"quantidade":50,"preco":7.9}] — preço unitário para aquela quantidade ou mais.</span></div></div>
+        <div class="field">
+          <label>Descrição</label>
+          <textarea name="descricao" required placeholder="Descreva o produto, embalagem e informações relevantes para lojistas..."></textarea>
+        </div>
+        <div class="field">
+          <label>Foto do produto</label>
+          <input type="file" name="imagem" accept="image/*" id="imageInput" required>
+          <img id="imagePreview" class="image-preview" hidden>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Adicionar à loja</button>
+      </form>
+    </div>
+
+    <div class="admin-card">
+      <h2>Produtos cadastrados</h2>
+      <div class="admin-list" id="adminList">
+        <!-- Preenchido via JavaScript -->
+      </div>
+    </div>
+
+    <div class="admin-card" id="ordersAdminCard">
+      <h2>Pedidos e entregas</h2>
+      <p>Os pagamentos são confirmados pelo Mercado Pago. Aqui você atualiza apenas a etapa logística.</p>
+      <button type="button" class="btn btn-primary" id="reloadOrdersBtn">Atualizar pedidos</button>
+      <p id="ordersAdminMessage" role="status"></p>
+      <div id="ordersAdminList" class="admin-list"></div>
+    </div>
+
+    <!-- ===== Publicação ===== -->
+    <div class="admin-card">
+      <h2>Publicação automática</h2>
+      <p class="publish-status publicado" id="publishStatus">Os produtos salvos no painel são publicados imediatamente para todos os visitantes deste site. Não é necessário baixar arquivos.</p>
+      
+    </div>
+  </div>
+
+  <script src="js/produtos.js"></script>
+  <script src="js/store.js"></script>
+  <script>
+    (function () {
+      /**
+       * ===== Login do painel =====
+       * A senha NÃO fica em texto puro no código — fica só o "hash"
+       * dela (um resultado de uma função matemática que não dá pra
+       * reverter diretamente). Isso impede que alguém veja a senha
+       * só abrindo o código-fonte da página.
+       *
+       * IMPORTANTE (leia antes de confiar 100% nisso): como este é um
+       * site 100% estático (sem servidor por trás), essa proteção é
+       * uma barreira "de dificultar", não uma segurança real — o hash
+       * fica público no código, e um hash sem "salt" pode em teoria
+       * ser quebrado por tentativa e erro fora do site (ainda mais se
+       * a senha for simples). Pra segurança de verdade — impedir
+       * qualquer edição de produtos sem autenticação genuína — é
+       * necessário um backend com login server-side. Fale comigo se
+       * quiser evoluir pra essa versão.
+       *
+       * Pra trocar a senha, é mais fácil me pedir: "gere o hash da senha
+       * NOVA_SENHA" — eu calculo e você só cola o resultado abaixo, no
+       * lugar do valor atual.
+       */
+      const loginScreen = document.getElementById('loginScreen');
+      const adminScreen = document.getElementById('adminScreen');
+      const loginMsg = document.getElementById('loginMsg');
+      const loginForm = document.getElementById('loginForm');
+      async function mostrarPainel(){loginScreen.hidden=true;adminScreen.hidden=false;await loadRemoteProducts();renderList();loadAdminAccounts();loadAnalytics();loadStockHistory();}
+      async function checkAdmin(){try{const r=await fetch('/api/admin/me',{credentials:'same-origin'});const d=await r.json();if(r.ok&&d.admin)mostrarPainel()}catch{}}
+      async function loadAdminAccounts(){try{const r=await fetch('/api/admin/accounts',{credentials:'same-origin'});const d=await r.json();if(!r.ok)throw Error(d.error||'Sem permissão');document.getElementById('adminAccountsList').innerHTML='<h3>Administradores cadastrados</h3>'+d.admins.map(a=>`<p>${a.name||'Administrador'} — ${a.email} (${a.active?'ativo':'inativo'})</p>`).join('')}catch(e){document.getElementById('adminAccountsList').textContent=e.message}}
+      checkAdmin();
+      loginForm.addEventListener('submit',async(e)=>{e.preventDefault();loginMsg.textContent='Verificando acesso...';const email=document.getElementById('loginEmail').value.trim(),password=document.getElementById('loginPassword').value;try{const r=await fetch('/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({email,password})});const d=await r.json();if(!r.ok)throw new Error(d.error||'Falha no login');loginMsg.textContent='';await mostrarPainel()}catch(err){loginMsg.textContent=err.message||'Não foi possível conectar ao servidor.'}finally{document.getElementById('loginPassword').value=''}});
+      document.getElementById('createAdminForm').addEventListener('submit',async e=>{e.preventDefault();const m=document.getElementById('adminAccountMessage');m.textContent='Criando conta...';try{const r=await fetch('/api/admin/accounts',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({name:document.getElementById('newAdminName').value,email:document.getElementById('newAdminEmail').value,password:document.getElementById('newAdminPassword').value})});const d=await r.json();if(!r.ok)throw Error(d.error||'Não foi possível criar.');m.textContent='Administrador adicionado.';e.target.reset();loadAdminAccounts()}catch(err){m.textContent=err.message}});
+            document.getElementById('logoutBtn').addEventListener('click',async()=>{try{await fetch('/api/admin/logout',{method:'POST',credentials:'same-origin'})}catch{}adminScreen.hidden=true;loginScreen.hidden=false;});
+
+      // ---- Pré-visualização da imagem ----
+      const imageInput = document.getElementById('imageInput');
+      const imagePreview = document.getElementById('imagePreview');
+      let imagemBase64 = '';
+
+      /**
+       * A foto é gravada dentro do próprio produtos.js (em base64), então
+       * uma foto de celular de 4 MB deixaria o arquivo gigante e o site
+       * lento. Aqui ela é reduzida pra no máximo 800px e recomprimida
+       * antes de ser guardada — o resultado fica em torno de 60–120 KB.
+       */
+      const MAX_LADO = 800;
+
+      function redimensionarImagem(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onerror = () => reject(new Error('Não consegui ler o arquivo.'));
+          reader.onload = () => {
+            const img = new Image();
+            img.onerror = () => reject(new Error('Arquivo de imagem inválido.'));
+            img.onload = () => {
+              const escala = Math.min(1, MAX_LADO / Math.max(img.width, img.height));
+              const canvas = document.createElement('canvas');
+              canvas.width = Math.round(img.width * escala);
+              canvas.height = Math.round(img.height * escala);
+
+              const ctx = canvas.getContext('2d');
+              // Fundo branco: imagens PNG transparentes virariam preto no JPEG.
+              ctx.fillStyle = '#ffffff';
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+              resolve(canvas.toDataURL('image/jpeg', 0.82));
+            };
+            img.src = reader.result;
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      imageInput.addEventListener('change', async () => {
+        const file = imageInput.files[0];
+        if (!file) return;
+        try {
+          imagemBase64 = await redimensionarImagem(file);
+          imagePreview.src = imagemBase64;
+          imagePreview.hidden = false;
+        } catch (erro) {
+          imagemBase64 = '';
+          imagePreview.hidden = true;
+          imageInput.value = '';
+          alert(erro.message);
+        }
+      });
+
+      // Catálogo compartilhado pelo servidor: alterações ficam visíveis para todos sem baixar arquivos.
+      async function loadRemoteProducts(){const r=await fetch('/api/products',{credentials:'same-origin',cache:'no-store'});const d=await r.json();if(!r.ok)throw Error(d.error||'Não foi possível carregar o catálogo');localStorage.setItem('sc_server_products_v1',JSON.stringify(d.products||[]));}
+      // ---- Adicionar produto diretamente à loja ----
+      document.getElementById('productForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!imagemBase64) {
+          alert('Escolha uma foto do produto.');
+          return;
+        }
+        const data = new FormData(e.target);
+        const nome = data.get('nome').trim();
+        const preco = parseFloat(data.get('preco'));
+        const precoAntigoRaw = data.get('precoAntigo').trim();
+        const precoAntigo = precoAntigoRaw ? parseFloat(precoAntigoRaw) : null;
+        const selo = data.get('selo');
+        const categoria = data.get('categoria') || 'Acessórios';
+        const pedidoMinimo = Math.max(1, parseInt(data.get('pedidoMinimo') || '1', 10));
+        const estoque = Math.max(0, parseInt(data.get('estoque') || '0', 10));
+        let precosVolume = [];
+        try { precosVolume = data.get('precosVolume').trim() ? JSON.parse(data.get('precosVolume')) : []; if (!Array.isArray(precosVolume) || precosVolume.some(t => !(Number(t.quantidade)>0) || !(Number(t.preco)>0))) throw new Error('Formato inválido'); precosVolume = precosVolume.map(t=>({quantidade:Number(t.quantidade),preco:Number(t.preco)})).sort((a,b)=>a.quantidade-b.quantidade); } catch (_) { alert('Confira os preços por volume. Use uma lista JSON com quantidade e preço.'); return; }
+
+        if (!nome || !data.get('peso').trim() || !data.get('descricao').trim()) {
+          alert('Preencha todos os campos.');
+          return;
+        }
+        if (!(preco > 0)) {
+          alert('Informe um preço válido, maior que zero.');
+          return;
+        }
+        if (precoAntigoRaw && !(precoAntigo > preco)) {
+          alert('O preço antigo precisa ser maior que o preço novo (senão não é desconto).');
+          return;
+        }
+
+        const id = nome.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now();
+
+        const productPayload = {
+          id,
+          nome,
+          peso: data.get('peso').trim(),
+          preco,
+          precoAntigo,
+          selo,
+          descricao: data.get('descricao').trim(),
+          imagem: imagemBase64,
+          categoria,
+          pedidoMinimo,
+          estoque,
+          precosVolume
+        };
+        const submitButton=e.target.querySelector('button[type=submit]');submitButton.disabled=true;submitButton.textContent='Salvando na loja...';
+        try{const r=await fetch('/api/admin/products',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify(productPayload)});const result=await r.json();if(!r.ok)throw Error(result.error||'Não foi possível salvar o produto.');localStorage.setItem('sc_server_products_v1',JSON.stringify(result.products||[]));e.target.reset();imagePreview.hidden=true;imagemBase64='';renderList();alert('Produto salvo e publicado! Ele já está disponível no catálogo da loja.');window.location.href='/index.html#produtos';}
+        catch(err){alert(err.message||'Erro ao salvar produto.');}
+        finally{submitButton.disabled=false;submitButton.textContent='Adicionar à loja';}
+      });
+
+      // ---- Pedidos reais registrados no servidor ----
+      const ordersListEl=document.getElementById('ordersAdminList');
+      const ordersMsgEl=document.getElementById('ordersAdminMessage');
+      async function loadAdminOrders(){if(!ordersListEl)return;ordersMsgEl.textContent='Carregando pedidos...';try{const r=await fetch('/api/admin/orders',{credentials:'same-origin'});const d=await r.json();if(!r.ok)throw new Error(d.error||'Falha ao carregar pedidos');ordersListEl.innerHTML='';if(!d.orders.length){ordersListEl.innerHTML='<p>Nenhum pedido online registrado.</p>'}d.orders.forEach(o=>{const el=document.createElement('article');el.className='admin-list-item';const status=String(o.status||'pending');const logistics=String(o.fulfillmentStatus||'awaiting');el.innerHTML=`<div class="info"><h4>${escapeHTML(o.id)} · ${formatBRL(o.total)}</h4><span>${escapeHTML(o.email||'')} · ${new Date(o.createdAt).toLocaleString('pt-BR')} · Pagamento: ${escapeHTML(status)}</span><p>${(o.items||[]).map(i=>`${Number(i.quantity)||1}× ${escapeHTML(i.title||'Produto')}`).join(' · ')}</p><label>Entrega <select class="order-fulfillment"><option value="awaiting">Aguardando pagamento</option><option value="preparing">Em separação</option><option value="shipped">Enviado</option><option value="delivered">Entregue</option></select></label><button type="button" class="btn btn-primary save-fulfillment">Salvar etapa</button></div>`;const sel=el.querySelector('select');sel.value=['awaiting','preparing','shipped','delivered'].includes(logistics)?logistics:'awaiting';el.querySelector('.save-fulfillment').addEventListener('click',async()=>{try{const rr=await fetch('/api/admin/orders/'+encodeURIComponent(o.id),{method:'PATCH',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({fulfillmentStatus:sel.value})});const dd=await rr.json();if(!rr.ok)throw new Error(dd.error||'Falha ao atualizar');ordersMsgEl.textContent='Etapa logística salva.';loadAdminOrders()}catch(e){ordersMsgEl.textContent=e.message}});ordersListEl.appendChild(el)});ordersMsgEl.textContent=`${d.orders.length} pedido(s) carregado(s).`}catch(e){ordersMsgEl.textContent=e.message}}
+      document.getElementById('reloadOrdersBtn')?.addEventListener('click',loadAdminOrders);
+
+      // ---- Publicar catálogo ----
+      // Buscamos os elementos dentro da função porque renderList() pode
+      // rodar logo no início da página, antes desta parte do script.
+      function atualizarStatus() {
+        const publishStatus = document.getElementById('publishStatus');
+        const discardBtn = document.getElementById('discardBtn');
+        const pendente = hasDraftChanges();
+        if(publishStatus){publishStatus.className = 'publish-status publicado';publishStatus.textContent = 'Os produtos salvos no painel são publicados imediatamente para todos os visitantes deste site. Não é necessário baixar arquivos.';}
+        if(discardBtn)discardBtn.hidden = true;
+      }
+
+      document.getElementById('publishBtn')?.addEventListener('click', () => {
+        const conteudo = buildProdutosJS();
+        const blob = new Blob([conteudo], { type: 'text/javascript;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'produtos.js';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+        const tamanhoKB = Math.round(blob.size / 1024);
+        alert(
+          'Arquivo produtos.js baixado (' + tamanhoKB + ' KB).\n\n' +
+          'Agora substitua o js/produtos.js do site por ele e suba pra hospedagem.\n\n' +
+          'Depois que subir, você pode clicar em "Descartar rascunho" pra ver a loja igual aos clientes.'
+        );
+      });
+
+      document.getElementById('discardBtn')?.addEventListener('click', () => {
+        if (!confirm('Isso apaga as alterações deste navegador e volta pro catálogo publicado (js/produtos.js).\n\nSe você ainda não baixou e subiu o produtos.js, elas serão perdidas. Continuar?')) return;
+        discardDraft();
+        renderList();
+      });
+
+      // Painel V21-V25: indicadores, alertas e auditoria de estoque.
+      const brl = v => new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(Number(v)||0);
+      async function loadAnalytics(){try{const r=await fetch('/api/admin/analytics',{credentials:'same-origin',cache:'no-store'}),d=await r.json();if(!r.ok)throw Error(d.error||'Falha ao carregar indicadores');const cards=[['Produtos',d.products],['Pedidos',d.orders],['Clientes',d.customers],['Pagos',d.paidOrders],['Aguardando pagamento',d.pendingOrders],['Faturamento confirmado',brl(d.revenue)]];document.getElementById('analyticsGrid').innerHTML=cards.map(([k,v])=>`<div style="padding:16px;border:1px solid #26372b;border-radius:14px;background:#101712"><div style="font-size:13px;color:#a0afa5">${k}</div><strong style="font-size:22px;color:#63e68b">${v}</strong></div>`).join('');document.getElementById('lowStockList').innerHTML='<h3>Estoque baixo</h3>'+(d.lowStock.length?d.lowStock.map(x=>`<p>${escapeHTML(x.nome)} — ${x.estoque} unidade(s)</p>`).join(''):'<p>Nenhum alerta de estoque baixo (limite: 5 unidades).</p>');}catch(e){document.getElementById('analyticsGrid').textContent=e.message}}
+      async function loadStockHistory(){try{const pr=await fetch('/api/products',{cache:'no-store'}),pd=await pr.json();document.getElementById('stockProduct').innerHTML=(pd.products||[]).map(p=>`<option value="${escapeHTML(p.id)}">${escapeHTML(p.nome)} — estoque: ${Number(p.estoque)||0}</option>`).join('');const r=await fetch('/api/admin/inventory/movements',{credentials:'same-origin'}),d=await r.json();if(!r.ok)throw Error(d.error||'Falha ao carregar histórico');document.getElementById('stockHistory').innerHTML='<h3>Últimas movimentações</h3>'+(d.movements.length?d.movements.slice(-30).reverse().map(m=>`<p>${escapeHTML(m.productName)} · ${m.quantityDelta>0?'+':''}${m.quantityDelta} · ${escapeHTML(m.reason)} · ${new Date(m.createdAt).toLocaleString('pt-BR')}</p>`).join(''):'<p>Nenhuma movimentação manual registrada.</p>')}catch(e){document.getElementById('stockHistory').textContent=e.message}}
+      document.getElementById('refreshAnalytics').addEventListener('click',loadAnalytics);
+      document.getElementById('stockAdjustForm').addEventListener('submit',async e=>{e.preventDefault();const m=document.getElementById('stockMessage');m.textContent='Salvando...';try{const r=await fetch('/api/admin/inventory/adjust',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({productId:document.getElementById('stockProduct').value,delta:Number(document.getElementById('stockDelta').value),reason:document.getElementById('stockReason').value})}),d=await r.json();if(!r.ok)throw Error(d.error||'Falha ao ajustar estoque');m.textContent='Estoque atualizado.';e.target.reset();await loadRemoteProducts();renderList();await loadStockHistory();await loadAnalytics()}catch(err){m.textContent=err.message}});
+
+      // ---- Lista de produtos cadastrados ----
+      function renderList() {
+        const lista = document.getElementById('adminList');
+        const produtos = JSON.parse(localStorage.getItem('sc_server_products_v1')||'null') || getAllProducts();
+        lista.innerHTML = '';
+        atualizarStatus();
+
+        if (produtos.length === 0) {
+          lista.innerHTML = '<p style="color:var(--text-muted); font-size:13.5px;">Nenhum produto cadastrado ainda.</p>';
+          return;
+        }
+
+        produtos.forEach((produto) => {
+          const row = document.createElement('div');
+          row.className = 'admin-list-item';
+          row.innerHTML = `
+            <img src="${produto.imagem}" alt="${escapeHTML(produto.nome)}">
+            <div class="info">
+              <h4>${escapeHTML(produto.nome)}</h4>
+              <span>${escapeHTML(produto.peso)} · ${formatBRL(produto.preco)}${produto.precoAntigo ? ' (de ' + formatBRL(produto.precoAntigo) + ')' : ''}${produto.selo ? ' · selo: ' + escapeHTML(produto.selo) : ''}</span>
+            </div>
+            <button type="button" class="product-edit" aria-label="Editar produto" style="margin-right:8px">Editar</button><button type="button" class="product-remove" aria-label="Remover produto">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+            </button>
+          `;
+          row.querySelector('.product-edit').addEventListener('click', async()=>{
+            const overlay=document.createElement('div');overlay.style='position:fixed;inset:0;background:#000b;z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px';
+            const form=document.createElement('form');form.style='background:#101712;color:#f3f7f4;width:min(620px,100%);max-height:90vh;overflow:auto;padding:22px;border-radius:16px;display:grid;gap:12px';
+            form.innerHTML=`<h2 style="margin:0">Editar produto</h2><label>Nome<input name="nome" required maxlength="180" value="${escapeHTML(produto.nome||'')}" style="width:100%;padding:10px"></label><label>Descrição<textarea name="descricao" maxlength="2000" rows="3" style="width:100%;padding:10px">${escapeHTML(produto.descricao||'')}</textarea></label><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><label>Preço atual (R$)<input name="preco" type="number" min="0.01" step="0.01" required value="${Number(produto.preco)||0}" style="width:100%;padding:10px"></label><label>Preço antigo / oferta (R$)<input name="precoAntigo" type="number" min="0" step="0.01" value="${Number(produto.precoAntigo)||0}" style="width:100%;padding:10px"></label><label>Categoria<input name="categoria" value="${escapeHTML(produto.categoria||'Acessórios')}" style="width:100%;padding:10px"></label><label>Estoque<input name="estoque" type="number" min="0" step="1" value="${Number(produto.estoque)||0}" style="width:100%;padding:10px"></label></div><label>Texto do selo (ex.: OFERTA)<input name="selo" maxlength="40" value="${escapeHTML(produto.selo||'')}" style="width:100%;padding:10px"></label><label>Trocar imagem do produto<input name="imagemArquivo" type="file" accept="image/*" style="width:100%;padding:10px"></label><small>Deixe o arquivo vazio para manter a imagem atual. Preencha o preço antigo acima do preço atual para mostrar a oferta.</small><div style="display:flex;gap:10px;justify-content:flex-end"><button type="button" data-cancel style="padding:10px 16px">Cancelar</button><button type="submit" style="padding:10px 16px;background:#20c45a;color:#061009;border:0;border-radius:8px">Salvar alterações</button></div><p data-msg style="margin:0"></p>`;
+            overlay.appendChild(form);document.body.appendChild(overlay);form.querySelector('[data-cancel]').onclick=()=>overlay.remove();
+            form.addEventListener('submit',async ev=>{ev.preventDefault();const msg=form.querySelector('[data-msg]');msg.textContent='Salvando...';try{const fd=new FormData(form),data={...produto,nome:fd.get('nome').trim(),descricao:fd.get('descricao'),preco:Number(fd.get('preco')),precoAntigo:Number(fd.get('precoAntigo'))>Number(fd.get('preco'))?Number(fd.get('precoAntigo')):null,selo:fd.get('selo'),categoria:fd.get('categoria'),estoque:Number(fd.get('estoque'))};const file=form.querySelector('[name="imagemArquivo"]').files[0];if(file){if(file.size>1800000)throw Error('A imagem deve ter até 1,8 MB.');data.imagem=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(Error('Não foi possível ler a imagem.'));reader.readAsDataURL(file)})}const r=await fetch('/api/admin/products/'+encodeURIComponent(produto.id),{method:'PUT',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify(data)});const d=await r.json();if(!r.ok)throw Error(d.error||'Falha ao editar');localStorage.setItem('sc_server_products_v1',JSON.stringify(d.products||[]));overlay.remove();renderList();loadAnalytics();loadStockHistory()}catch(err){msg.textContent=err.message}});
+          });
+          row.querySelector('.product-remove').addEventListener('click', () => {
+            if (confirm(`Remover "${produto.nome}" da loja?`)) {
+              fetch('/api/admin/products/'+encodeURIComponent(produto.id),{method:'DELETE',credentials:'same-origin'}).then(async r=>{const d=await r.json();if(!r.ok)throw Error(d.error||'Não foi possível remover');localStorage.setItem('sc_server_products_v1',JSON.stringify(d.products||[]));renderList()}).catch(err=>alert(err.message));
+            }
+          });
+          lista.appendChild(row);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
