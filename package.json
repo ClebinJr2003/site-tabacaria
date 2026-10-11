@@ -1,16 +1,14 @@
 {
   "name": "souza-carvalho-loja",
-  "version": "14.0.0",
+  "version": "36.0.0",
   "private": true,
   "description": "Souza & Carvalho — favoritos, ficha rápida de produtos e recompra",
   "scripts": {
     "start": "node server.js",
-    "db:schema": "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -f database/schema.sql"
+    "build": "node scripts/build-demo.js"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22.13.0 <25"
   },
-  "dependencies": {
-    "pg": "^8.16.3"
-  }
+  "dependencies": {}
 }
