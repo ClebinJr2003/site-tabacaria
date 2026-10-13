@@ -1258,3 +1258,60 @@ hr{border:0;border-top:1px solid rgba(72,220,128,.16)}
 .product-card .stock-note::after,
 .stock-note::before,
 .stock-note::after { background: transparent !important; box-shadow: none !important; border: 0 !important; }
+
+/* V38 — Hero logo limpa, sem molduras circulares duplicadas */
+.hero-visual{aspect-ratio:1.15/1!important;min-height:280px!important;padding:30px!important;overflow:hidden!important;border-radius:26px!important;background:radial-gradient(ellipse at center,rgba(21,80,43,.28),transparent 68%),linear-gradient(145deg,#101a13,#071009)!important;border:1px solid #1b5732!important;box-shadow:0 18px 55px #0007,inset 0 1px #ffffff0a!important}
+.hero-visual:before{content:none!important;display:none!important}
+.hero-visual:after{content:none!important;display:none!important}
+.hero-visual img{display:block!important;width:min(100%,355px)!important;height:auto!important;max-height:100%!important;object-fit:contain!important;aspect-ratio:1!important;border-radius:50%!important;filter:drop-shadow(0 12px 30px #0008)!important;box-shadow:none!important}
+@media(max-width:650px){.hero-visual{min-height:240px!important;padding:22px!important;aspect-ratio:1.15/1!important}.hero-visual img{width:min(100%,250px)!important}}
+/* Estado de conta autenticada: não mostrar opções de acesso */
+.account-modal.sc-is-authenticated .account-tabs{display:none!important}
+.account-modal.sc-is-authenticated .account-intro{display:none!important}
+.account-modal.sc-is-authenticated #accountForm{display:none!important}
+.account-modal.sc-is-authenticated #accountSignedIn{display:block!important}
+.account-modal.sc-is-authenticated #accountWelcome{padding:13px 16px;border:1px solid #255b39;border-radius:12px;background:#0e2517;color:#a2f5ba;font-weight:650;overflow-wrap:anywhere}
+
+
+/* V37 - remove fundos brancos na navegação do painel e nas abas da loja */
+html, body { background-color:#050b07 !important; }
+#adminScreen .sc-dash-nav, .sc-dash-nav,
+#adminScreen nav.sc-dash-nav {
+  background:linear-gradient(120deg,#0c1c12,#08120c) !important;
+  background-color:#0a170e !important;
+  border:1px solid #28543a !important;
+  box-shadow:0 12px 35px rgba(0,0,0,.35) !important;
+  color:#c9f6d7 !important;
+}
+#adminScreen .sc-dash-nav a, .sc-dash-nav a {
+  background:transparent !important;
+  background-color:transparent !important;
+  color:#b9dec4 !important;
+  box-shadow:none !important;
+}
+#adminScreen .sc-dash-nav a:hover, #adminScreen .sc-dash-nav a:focus-visible,
+.sc-dash-nav a:hover,.sc-dash-nav a:focus-visible {
+  background:#153b24 !important;
+  color:#6cf4a0 !important;
+}
+.category-section,.category-chips,.catalog-tools,.catalog-section,
+.catalog-filters,.catalog-tabs,.category-tabs,.filter-tabs,
+.tabs,.tab-bar,.tab-nav,.tab-content,.catalog-pagination,
+#catalogSection,#productsSection {
+  background-color:#08120c !important;
+  color:#e8f9ed !important;
+  border-color:#254633 !important;
+}
+.category-chip,.catalog-pagination button,.tabs button,.tab-nav button,
+.catalog-tabs button,.filter-tabs button {
+  background:#102218 !important;
+  color:#c8e7d0 !important;
+  border-color:#2b5239 !important;
+}
+.category-chip:hover,.category-chip.active,
+.catalog-pagination button.active,.tabs button.active,.tab-nav button.active,
+.catalog-tabs button.active,.filter-tabs button.active {
+  background:#1fc862 !important;
+  color:#04120a !important;
+  border-color:#1fc862 !important;
+}

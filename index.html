@@ -50,7 +50,33 @@ button,.btn,.add-to-cart-btn,.checkout-btn{accent-color:#20c45a}
 .product-image img{mix-blend-mode:normal!important}
 footer a:hover,.main-nav a:hover{color:#63e68b!important}
 </style>
-</head>
+<style id="sc-premium-login">
+/* SC PREMIUM AUTH — visual only, original authentication stays intact */
+.account-overlay:not([hidden]),.account-modal:not([hidden]){animation:scAuthIn .26s ease both}
+.account-overlay{background:rgba(1,8,5,.82)!important;backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px)}
+.account-modal{width:min(520px,calc(100vw - 26px))!important;max-height:min(92vh,900px)!important;padding:36px!important;border:1px solid rgba(83,255,144,.24)!important;border-radius:26px!important;background:radial-gradient(ellipse at 85% 0%,rgba(29,142,69,.18),transparent 47%),linear-gradient(145deg,#121b16,#070c09 70%)!important;box-shadow:0 35px 110px #000b,0 0 0 1px #ffffff07,inset 0 1px #ffffff0d!important;color:#f2fff5!important;scrollbar-width:thin;scrollbar-color:#2b6942 transparent}
+.account-modal:before{content:'';display:block;height:4px;width:100px;background:linear-gradient(90deg,#32e57b,#9bffb4);border-radius:20px;box-shadow:0 0 26px #34ef8080;margin-bottom:25px}
+.account-modal .eyebrow{display:inline-flex!important;letter-spacing:.18em!important;color:#70ef9d!important;font-size:11px!important;font-weight:800!important}
+.account-modal h2{font-size:clamp(25px,4vw,33px)!important;letter-spacing:-.04em!important;line-height:1.13!important;margin:12px 0!important;color:#fff!important}
+.account-modal .account-intro{font-size:14px!important;color:#a7b9ad!important;line-height:1.7!important;margin-bottom:24px!important}
+.account-modal .account-tabs{padding:5px!important;border:1px solid #274231!important;background:#08110b!important;border-radius:14px!important;gap:5px!important;margin:20px 0 25px!important}
+.account-modal .account-tabs button{border:0!important;background:transparent!important;color:#a3b7aa!important;border-radius:10px!important;padding:13px 9px!important;transition:.2s ease!important}
+.account-modal .account-tabs button.active{background:linear-gradient(125deg,#1fc965,#119b4a)!important;color:#03150b!important;box-shadow:0 5px 20px #11be4c40!important}
+.account-modal label{font-size:12px!important;color:#c6d8cb!important;letter-spacing:.03em!important;margin:16px 0 8px!important}
+.account-modal input{background:#080f0b!important;border:1px solid #304839!important;color:#fff!important;border-radius:12px!important;padding:15px 16px!important;min-height:49px!important;outline:none!important;transition:border-color .2s,box-shadow .2s!important}
+.account-modal input:focus{border-color:#43e785!important;box-shadow:0 0 0 4px #27d46d1c!important}
+.account-modal input::placeholder{color:#718677!important}
+.account-modal #accountSubmit,.account-modal #profileForm .checkout-btn{min-height:51px!important;border:0!important;border-radius:13px!important;background:linear-gradient(110deg,#32e47a,#15ad53)!important;color:#03140a!important;font-weight:900!important;letter-spacing:.025em!important;box-shadow:0 12px 27px #0cb74d32!important;transition:transform .2s,filter .2s!important}
+.account-modal #accountSubmit:hover,.account-modal #profileForm .checkout-btn:hover{transform:translateY(-2px)!important;filter:brightness(1.1)!important}
+.account-modal .account-close{top:18px!important;right:18px!important;width:36px!important;height:36px!important;border:1px solid #34523c!important;border-radius:50%!important;background:#132019!important;color:#d8f5df!important;font-size:25px!important;line-height:30px!important}
+.account-modal .account-security-note{margin-top:22px!important;padding-top:16px!important;border-top:1px solid #274030!important;color:#849d8b!important;font-size:11px!important}
+.account-modal .customer-profile-form{border-color:#294030!important}
+.account-modal .customer-profile-form h3{color:#ebfff1!important}
+.account-modal #accountMessage:not(:empty){padding:11px 12px!important;border-radius:10px!important;background:#173321!important;color:#89f6ac!important}
+.sc-auth-pass{position:relative}.sc-auth-pass input{padding-right:90px!important}.sc-auth-reveal{position:absolute;right:7px;top:50%;transform:translateY(-50%);background:#172b1d;border:1px solid #355e40;color:#b7f6c9;border-radius:8px;padding:8px 11px;font:700 11px inherit;cursor:pointer}
+@keyframes scAuthIn{from{opacity:0}to{opacity:1}}
+@media(max-width:520px){.account-modal{padding:24px 20px!important;border-radius:20px!important}.account-modal:before{margin-bottom:18px}.account-modal h2{font-size:26px!important}}
+</style></head>
 <body>
 
   <!-- ===== Cabeçalho ===== -->
@@ -218,14 +244,14 @@ footer a:hover,.main-nav a:hover{color:#63e68b!important}
   <div class="account-overlay" id="accountOverlay" hidden></div>
   <section class="account-modal" id="accountModal" role="dialog" aria-modal="true" aria-labelledby="accountTitle" hidden>
     <button type="button" id="accountClose" class="account-close" aria-label="Fechar">×</button>
-    <span class="eyebrow">ÁREA DO CLIENTE</span>
+    <span class="eyebrow">✦ SOUZA &amp; CARVALHO · ACESSO EXCLUSIVO</span>
     <h2 id="accountTitle">Entre ou crie sua conta</h2>
     <p class="account-intro">Para finalizar uma compra, entre com seu e-mail e senha ou faça seu cadastro gratuito.</p>
     <div class="account-tabs"><button type="button" class="active" id="loginTab">Entrar</button><button type="button" id="registerTab">Criar cadastro</button></div>
     <form id="accountForm">
       <label for="accountName" id="accountNameLabel" hidden>Nome completo / loja</label><input id="accountName" name="name" autocomplete="name" placeholder="Nome completo ou loja" hidden>
       <label for="accountEmail">E-mail</label><input id="accountEmail" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="voce@exemplo.com">
-      <label for="accountPassword">Senha</label><input id="accountPassword" name="password" type="password" autocomplete="current-password" required minlength="8" placeholder="Mínimo de 8 caracteres">
+      <label for="accountPassword">Senha</label><div class="sc-auth-pass"><input id="accountPassword" name="password" type="password" autocomplete="current-password" required minlength="8" placeholder="Mínimo de 8 caracteres"><button class="sc-auth-reveal" type="button" data-target="accountPassword" aria-label="Mostrar senha">Mostrar</button></div>
       <p id="accountMessage" role="status" aria-live="polite"></p>
       <button class="checkout-btn" id="accountSubmit" type="submit">Entrar</button>
     </form>
@@ -455,14 +481,15 @@ document.addEventListener('DOMContentLoaded', () => {
 (function(){
  const modal=document.getElementById('accountModal'),overlay=document.getElementById('accountOverlay'),form=document.getElementById('accountForm'),msg=document.getElementById('accountMessage'),nameInput=document.getElementById('accountName'),nameLabel=document.getElementById('accountNameLabel'),submit=document.getElementById('accountSubmit'),loginTab=document.getElementById('loginTab'),registerTab=document.getElementById('registerTab'),signed=document.getElementById('accountSignedIn'),welcome=document.getElementById('accountWelcome');
  let mode='login';
- function setMode(m){mode=m;loginTab.classList.toggle('active',m==='login');registerTab.classList.toggle('active',m==='register');nameInput.hidden=nameLabel.hidden=m!=='register';nameInput.required=m==='register';document.getElementById('accountPassword').autocomplete=m==='login'?'current-password':'new-password';submit.textContent=m==='login'?'Entrar':'Criar minha conta';msg.textContent='';msg.className='';form.hidden=!!window.SC_AUTH_USER;signed.hidden=!window.SC_AUTH_USER;document.getElementById('accountTitle').textContent=window.SC_AUTH_USER?'Minha conta':m==='login'?'Entre na sua conta':'Criar cadastro';}
+ function syncAuthUI(){const logged=!!window.SC_AUTH_USER;modal.classList.toggle('sc-is-authenticated',logged);document.querySelector('.account-tabs').hidden=logged;form.hidden=logged;signed.hidden=!logged;if(logged){welcome.textContent='Conectado como '+(window.SC_AUTH_USER.name||window.SC_AUTH_USER.email||'cliente');document.getElementById('accountTitle').textContent='Minha conta';}else{document.getElementById('accountTitle').textContent=mode==='login'?'Entre na sua conta':'Criar cadastro';}}
+ function setMode(m){mode=m;loginTab.classList.toggle('active',m==='login');registerTab.classList.toggle('active',m==='register');nameInput.hidden=nameLabel.hidden=m!=='register';nameInput.required=m==='register';document.getElementById('accountPassword').autocomplete=m==='login'?'current-password':'new-password';submit.textContent=m==='login'?'Entrar':'Criar minha conta';msg.textContent='';msg.className='';syncAuthUI();}
  function open(m='login'){modal.hidden=false;overlay.hidden=false;document.body.classList.add('modal-open');setMode(m)}function close(){modal.hidden=true;overlay.hidden=true;document.body.classList.remove('modal-open')}
  window.SC_OPEN_ACCOUNT=open;window.SC_AUTH_USER=null;
  document.getElementById('accountToggle').addEventListener('click',()=>open(window.SC_AUTH_USER?'login':'login'));document.getElementById('accountClose').addEventListener('click',close);overlay.addEventListener('click',close);loginTab.addEventListener('click',()=>setMode('login'));registerTab.addEventListener('click',()=>setMode('register'));
- async function refresh(){try{const r=await fetch('/api/me',{credentials:'same-origin'});if(r.ok){const d=await r.json();window.SC_AUTH_USER=d.user||null;fillProfile(d.user?.profile||{})}}catch(e){} document.getElementById('accountToggle').textContent=window.SC_AUTH_USER?'Minha conta':'Entrar / cadastrar';}
+ async function refresh(){try{const r=await fetch('/api/me',{credentials:'same-origin'});if(r.ok){const d=await r.json();window.SC_AUTH_USER=d.user||null;fillProfile(d.user?.profile||{})}}catch(e){} document.getElementById('accountToggle').textContent=window.SC_AUTH_USER?'Minha conta':'Entrar / cadastrar';syncAuthUI();}
  function fillProfile(p){for(const k of ['Name','Phone','Cpf','Cep','Address','Complement','City','State']){const el=document.getElementById('profile'+k);if(el)el.value=p[k.toLowerCase()]||''}}
  document.getElementById('profileForm').addEventListener('submit',async e=>{e.preventDefault();const p={name:document.getElementById('profileName').value.trim(),phone:document.getElementById('profilePhone').value.trim(),cpf:document.getElementById('profileCpf').value.trim(),cep:document.getElementById('profileCep').value.trim(),address:document.getElementById('profileAddress').value.trim(),complement:document.getElementById('profileComplement').value.trim(),city:document.getElementById('profileCity').value.trim(),state:document.getElementById('profileState').value.trim().toUpperCase()};const m=document.getElementById('profileMessage');try{const r=await fetch('/api/profile',{method:'PUT',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify(p)});const d=await r.json();if(!r.ok)throw new Error(d.error||'Não foi possível salvar.');m.textContent='Dados salvos com sucesso.';window.SC_AUTH_USER=d.user}catch(err){m.textContent=err.message}});
- form.addEventListener('submit',async e=>{e.preventDefault();msg.textContent='';const email=document.getElementById('accountEmail').value.trim().toLowerCase(),password=document.getElementById('accountPassword').value;const payload={email,password};if(mode==='register')payload.name=nameInput.value.trim();submit.disabled=true;try{const r=await fetch('/api/'+(mode==='register'?'register':'login'),{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify(payload)});const d=await r.json();if(!r.ok)throw new Error(d.error||'Não foi possível concluir.');window.SC_AUTH_USER=d.user;msg.textContent=mode==='register'?'Cadastro realizado com sucesso!':'Login realizado com sucesso!';msg.className='success';document.getElementById('accountToggle').textContent='Minha conta';form.hidden=true;signed.hidden=false;welcome.textContent='Você está conectado como '+d.user.email;fillProfile(d.user.profile||{});setTimeout(()=>{form.hidden=true;signed.hidden=false},150)}catch(err){msg.textContent=err.message||'Não foi possível conectar ao servidor. Acesse pelo servidor Node.js e tente novamente.'}finally{submit.disabled=false}});
+ form.addEventListener('submit',async e=>{e.preventDefault();msg.textContent='';const email=document.getElementById('accountEmail').value.trim().toLowerCase(),password=document.getElementById('accountPassword').value;const payload={email,password};if(mode==='register')payload.name=nameInput.value.trim();submit.disabled=true;try{const r=await fetch('/api/'+(mode==='register'?'register':'login'),{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify(payload)});const d=await r.json();if(!r.ok)throw new Error(d.error||'Não foi possível concluir.');window.SC_AUTH_USER=d.user;msg.textContent=mode==='register'?'Cadastro realizado com sucesso!':'Login realizado com sucesso!';msg.className='success';document.getElementById('accountToggle').textContent='Minha conta';form.hidden=true;signed.hidden=false;welcome.textContent='Você está conectado como '+d.user.email;fillProfile(d.user.profile||{});syncAuthUI()}catch(err){msg.textContent=err.message||'Não foi possível conectar ao servidor. Acesse pelo servidor Node.js e tente novamente.'}finally{submit.disabled=false}});
  document.getElementById('accountLogout').addEventListener('click',async()=>{try{await fetch('/api/logout',{method:'POST',credentials:'same-origin'})}catch(e){}window.SC_AUTH_USER=null;document.getElementById('accountToggle').textContent='Entrar / cadastrar';setMode('login');open('login')});
  refresh();
 })();
@@ -500,5 +527,5 @@ window.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementBy
 })();
 </script>
 
-</body>
+<script>document.querySelectorAll(".sc-auth-reveal").forEach(b=>b.addEventListener("click",()=>{const x=document.getElementById(b.dataset.target);if(!x)return;const show=x.type==="password";x.type=show?"text":"password";b.textContent=show?"Ocultar":"Mostrar";b.setAttribute("aria-label",show?"Ocultar senha":"Mostrar senha")}));</script></body>
 </html>
